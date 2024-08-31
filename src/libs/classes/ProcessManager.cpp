@@ -6,9 +6,13 @@
 using namespace std;
 
 class ProcessManager : public IProcessManager {
+protected:
+    pid_t pid = (pid_t)0;
+    int status = 0;
+public:
     pid_t createProcess(const std::string& command) {
-        pid_t pid = fork();
-        if (pid == 0) {
+        this->pid = fork();
+        if (this->pid == 0) {
             // Child process
             char* args[] = {const_cast<char*>("/bin/sh"), const_cast<char*>("-c"), const_cast<char*>(command.c_str()), nullptr};
             execvp(args[0], args);
@@ -17,9 +21,7 @@ class ProcessManager : public IProcessManager {
         return pid;  // Parent process
     }
 
-    int waitForProcess(pid_t pid) {
-        int status;
-        waitpid(pid, &status, 0);
-        return status;
+    int waitForProcess(int options) {
+        waitpid(this->pid, &this->status, 0);
     }
 };
