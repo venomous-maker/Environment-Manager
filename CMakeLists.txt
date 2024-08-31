@@ -3,4 +3,6 @@ project(EnvironmentManager)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(EnvironmentManager src/main.cpp)
+add_executable(EnvironmentManager src/main.cpp
+        src/libs/classes/ProcessManager.cpp
+        src/libs/headers/ProcessManager.h)
