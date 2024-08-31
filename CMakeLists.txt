@@ -7,4 +7,5 @@ add_executable(EnvironmentManager src/main.cpp
         src/libs/classes/ProcessManager.cpp
         src/libs/headers/ProcessManager.h
         src/libs/classes/ResourceManager.cpp
+        src/libs/classes/Logger.cpp
 )
