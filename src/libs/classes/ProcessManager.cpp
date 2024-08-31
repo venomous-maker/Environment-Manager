@@ -5,12 +5,9 @@
 #include "../headers/ProcessManager.h"
 using namespace std;
 
-class ProcessManager : public IProcessManager {
-protected:
-    pid_t pid = (pid_t)0;
-    int status = 0;
+class ProcessManager : public processManager::IProcessManager {
 public:
-    pid_t createProcess(const std::string& command) {
+    pid_t IProcessManager::createProcess(const std::string& command) {
         this->pid = fork();
         if (this->pid == 0) {
             // Child process
@@ -21,7 +18,15 @@ public:
         return pid;  // Parent process
     }
 
-    int waitForProcess(int options) {
-        waitpid(this->pid, &this->status, 0);
+    void IProcessManager::waitForProcess(int options) {
+        waitpid(this->pid, &this->status, options);
+    }
+
+    const pid_t IProcessManager::getProcessId() {
+        return this->pid;
+    }
+
+    const int IProcessManager::getProcessStatus() {
+        return this->status;
     }
 };
