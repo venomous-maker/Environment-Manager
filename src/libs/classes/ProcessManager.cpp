@@ -7,7 +7,7 @@ using namespace std;
 
 class ProcessManager : public processManager::IProcessManager {
 public:
-    pid_t IProcessManager::createProcess(const std::string& command) {
+    pid_t IProcessManager::createProcess(const std::string& command) override{
         this->pid = fork();
         if (this->pid == 0) {
             // Child process
@@ -18,15 +18,15 @@ public:
         return pid;  // Parent process
     }
 
-    void IProcessManager::waitForProcess(int options) {
+    void IProcessManager::waitForProcess(int options) override {
         waitpid(this->pid, &this->status, options);
     }
 
-    const pid_t IProcessManager::getProcessId() {
+    const pid_t IProcessManager::getProcessId()  override{
         return this->pid;
     }
 
-    const int IProcessManager::getProcessStatus() {
+    const int IProcessManager::getProcessStatus() override{
         return this->status;
     }
 };
