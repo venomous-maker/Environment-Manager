@@ -10,7 +10,7 @@ public:
 
     ResourceUsage getUsage(pid_t pid) override {
         ResourceUsage usage = {0.0, 0, 0, 0};
-        struct rusage r_usage;
+        struct rusage r_usage{};
         if (getrusage(RUSAGE_CHILDREN, &r_usage) == 0) {
             usage.cpuTime = r_usage.ru_utime.tv_sec + r_usage.ru_utime.tv_usec / 1e6;
             usage.memoryUsage = r_usage.ru_maxrss;
