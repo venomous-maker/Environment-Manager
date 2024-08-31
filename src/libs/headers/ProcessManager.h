@@ -19,13 +19,34 @@
 #include <fcntl.h>
 #include <signal.h>
 
+namespace processManager {
+    class IProcessManager {
+    protected:
+        pid_t pid;
+        int status;
+    public:
+        IProcessManager():pid(0),status(0){};
+        virtual pid_t createProcess(const std::string& );
+        virtual void waitForProcess(int);
+        virtual const int getProcessStatus();
+        virtual const pid_t getProcessId();
+        virtual ~IProcessManager()= delete;
+    };
+    // ResourceMonitor: Tracks resource usage such as CPU, memory, and I/O
+    class IResourceMonitor {
+    public:
+        struct ResourceUsage {
+            double cpuTime;  // CPU time in seconds
+            long memoryUsage;  // Memory usage in KB
+            long ioRead;  // Bytes read
+            long ioWrite;  // Bytes written
+        };
+        IResourceMonitor();
+        virtual ResourceUsage getUsage(pid_t);
 
-class IProcessManager {
-public:
-    pid_t createProcess(const std::string& );
-    int waitForProcess(pid_t);
-};
-
+        virtual ~IResourceMonitor()=delete;
+    };
+}
 
 
 #endif //PROCESSMANAGER_H
