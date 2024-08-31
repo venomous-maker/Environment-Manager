@@ -46,6 +46,19 @@ namespace processManager {
 
         virtual ~IResourceMonitor()=delete;
     };
+
+    class ILogger {
+    public:
+        explicit ILogger(const std::string& logFile) : logStream(logFile, std::ios::out | std::ios::app) {};
+
+        virtual void logResourceUsage(const IResourceMonitor::ResourceUsage& usage);
+
+        virtual void logExecutionTime(double time);
+        virtual ~ILogger()=delete;
+
+    private:
+        std::ofstream logStream;
+    };
 }
 
 
