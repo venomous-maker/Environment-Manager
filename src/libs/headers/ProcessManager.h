@@ -30,7 +30,7 @@ namespace processManager {
         virtual void waitForProcess(int);
         virtual const int getProcessStatus();
         virtual const pid_t getProcessId();
-        virtual ~IProcessManager()= delete;
+        virtual ~IProcessManager()= default;
     };
     // ResourceMonitor: Tracks resource usage such as CPU, memory, and I/O
     class IResourceMonitor {
@@ -44,7 +44,7 @@ namespace processManager {
         IResourceMonitor();
         virtual ResourceUsage getUsage(pid_t);
 
-        virtual ~IResourceMonitor()=delete;
+        virtual ~IResourceMonitor()=default;
     };
 
     class ILogger {
@@ -54,7 +54,7 @@ namespace processManager {
         virtual void logResourceUsage(const IResourceMonitor::ResourceUsage& usage);
 
         virtual void logExecutionTime(double time);
-        virtual ~ILogger()=delete;
+        virtual ~ILogger()=default;
 
     private:
         std::ofstream logStream;
