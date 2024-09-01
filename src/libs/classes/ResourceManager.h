@@ -5,9 +5,8 @@
 #include "../headers/ProcessManager.h"
 
 // ResourceMonitor: Tracks resource usage such as CPU, memory, and I/O
-class ResourceMonitor : processManager::IResourceMonitor{
+class ResourceMonitor : public processManager::IResourceMonitor {
 public:
-
     ResourceUsage getUsage(pid_t pid) override {
         ResourceUsage usage = {0.0, 0, 0, 0};
         struct rusage r_usage{};

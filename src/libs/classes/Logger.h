@@ -1,13 +1,18 @@
 //
 // Created by v3n0m on 01/09/24.
 //
-
+#ifndef LOGGER_H
+#define LOGGER_H
 #include "../headers/ProcessManager.h"
 using namespace  processManager;
 // Logger: Captures and logs output, resource usage, and execution time
-class Logger : public ILogger{
+class Logger : public ILogger {
 public:
     explicit Logger(const std::string& logFile) : logStream(logFile, std::ios::out | std::ios::app) {}
+
+    void log(const std::string& message) override {
+        logStream << message << std::endl;
+    }
 
     void logResourceUsage(const IResourceMonitor::ResourceUsage& usage) override {
         logStream << "CPU Time: " << usage.cpuTime << " sec, "
@@ -23,3 +28,5 @@ public:
 private:
     std::ofstream logStream;
 };
+
+#endif
