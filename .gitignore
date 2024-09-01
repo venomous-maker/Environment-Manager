@@ -4,3 +4,8 @@ cmake-build-debug
 CMakeCache.txt
 .cmake
 CMakeFiles
+*.log
+/cmake_install.cmake
+/EnvironmentManager
+/EnvironmentManager.cbp
+/Makefile
