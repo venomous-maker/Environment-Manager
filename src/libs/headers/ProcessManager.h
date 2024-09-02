@@ -54,7 +54,7 @@ namespace processManager {
         virtual bool suspendProcess() const = 0;
         virtual bool suspendProcess(pid_t) const = 0;
         virtual bool resumeProcess(pid_t) const = 0;
-        virtual bool killProcess(pid_t) const = 0;
+        virtual bool killProcess(pid_t) = 0;
         virtual void listActiveProcesses() const;
         virtual void listSystemProcesses() const;
 
