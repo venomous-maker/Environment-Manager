@@ -21,6 +21,12 @@
 #include <signal.h>
 #include <vector>
 #include <algorithm>
+#include <vector>
+#include <string>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <fstream>
+#include <dirent.h>
 
 namespace processManager {
 
@@ -47,6 +53,10 @@ namespace processManager {
         virtual pid_t getProcessId() const = 0;
         virtual bool suspendProcess() const = 0;
         virtual bool suspendProcess(pid_t) const = 0;
+        virtual bool resumeProcess(pid_t) const = 0;
+        virtual bool killProcess(pid_t) const = 0;
+        virtual void listActiveProcesses() const;
+        virtual void listSystemProcesses() const;
 
         virtual ~IProcessManager() = default;
     };
