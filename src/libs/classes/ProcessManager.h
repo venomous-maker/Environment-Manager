@@ -42,5 +42,16 @@ public:
     int getProcessStatus() const override {
         return status;
     }
+
+    // Suspend a process
+    bool suspendProcess(pid_t pid) {
+        if (kill(pid, SIGSTOP) == 0) {
+            return true;
+        }
+
+        std::cerr << "Failed to suspend process " << pid << std::endl;
+        return false;
+
+    }
 };
 #endif
