@@ -19,6 +19,8 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <vector>
+#include <algorithm>
 
 namespace processManager {
 
@@ -26,6 +28,16 @@ namespace processManager {
     protected:
         pid_t pid;
         int status;
+        std::vector<pid_t> activeProcesses;
+
+        // Remove a process from activeProcesses list
+        void removeActiveProcess(pid_t pid) {
+            activeProcesses.erase(
+                std::remove(activeProcesses.begin(), activeProcesses.end(), pid),
+                activeProcesses.end()
+            );
+        }
+
     public:
         IProcessManager() : pid(0), status(0) {}
 
