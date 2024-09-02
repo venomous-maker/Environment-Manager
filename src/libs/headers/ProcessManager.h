@@ -75,6 +75,8 @@ namespace processManager {
         virtual ResourceUsage getUsage(pid_t pid) = 0;
 
         virtual ~IResourceMonitor() = default;
+
+        virtual void displayUsage(const ResourceUsage& usage) const;
     };
 
     class ILogger {
