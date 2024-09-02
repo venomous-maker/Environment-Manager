@@ -75,9 +75,9 @@ public:
     }
 
     // Kill a process
-    bool killProcess(pid_t pid) const override{
+    bool killProcess(pid_t pid) override{
         if (kill(pid, SIGKILL) == 0) {
-            removeActiveProcess(pid);
+            this->removeActiveProcess(pid);
             return true;
         } else {
             std::cerr << "Failed to kill process " << pid << std::endl;
