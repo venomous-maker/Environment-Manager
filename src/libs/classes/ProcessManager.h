@@ -14,7 +14,8 @@ public:
             // Handle fork failure
             std::cerr << "Fork failed" << std::endl;
             exit(EXIT_FAILURE);
-        } else if (pid == 0) {
+        }
+        if (pid == 0) {
             // Child process
             char* args[] = {const_cast<char*>("/bin/sh"), const_cast<char*>("-c"), const_cast<char*>(command.c_str()), nullptr};
             if (execvp(args[0], args) == -1) {
