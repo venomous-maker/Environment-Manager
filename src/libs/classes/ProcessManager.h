@@ -25,31 +25,31 @@ public:
             }
         }
         // Parent process
-        return pid;
+        return this->pid;
     }
 
     void waitForProcess(int options) override {
-        if (waitpid(pid, &status, options) == -1) {
+        if (waitpid(this->pid, &this->status, options) == -1) {
             // Handle waitpid failure
             std::cerr << "waitpid failed" << std::endl;
         }
     }
 
     pid_t getProcessId() const override {
-        return pid;
+        return this->pid;
     }
 
     int getProcessStatus() const override {
-        return status;
+        return this->status;
     }
 
     // Suspend a process
     bool suspendProcess() const override {
-        if (kill(pid, SIGSTOP) == 0) {
+        if (kill(this->pid, SIGSTOP) == 0) {
             return true;
         }
 
-        std::cerr << "Failed to suspend process " << pid << std::endl;
+        std::cerr << "Failed to suspend process " << this->pid << std::endl;
         return false;
 
     }
@@ -59,7 +59,7 @@ public:
             return true;
         }
 
-        std::cerr << "Failed to suspend process " << pid << std::endl;
+        std::cerr << "Failed to suspend process " << this->pid << std::endl;
         return false;
 
     }
