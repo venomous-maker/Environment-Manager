@@ -33,6 +33,29 @@ public:
         logger->logExecutionTime(elapsed.count());
         logger->logResourceUsage(usage);
         logger->log("----------------------");
+
+        resourceMonitor->displayUsage(usage);
+    }
+
+    // Other emulator methods to suspend, resume, kill processes
+    bool suspendProcess(pid_t pid) {
+        return this->processManager->suspendProcess(pid);
+    }
+
+    bool resumeProcess(pid_t pid) const{
+       return processManager->resumeProcess(pid);
+    }
+
+    void killProcess(pid_t pid) const{
+        processManager->killProcess(pid);
+    }
+
+    void listSystemProcesses() const{
+        processManager->listSystemProcesses();
+    }
+
+    void listActiveProcesses() const{
+        processManager->listActiveProcesses();
     }
 
 private:
