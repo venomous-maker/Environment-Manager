@@ -65,7 +65,7 @@ public:
     }
 
     // Resume a suspended process
-    bool resumeProcess(pid_t pid) {
+    bool resumeProcess(pid_t pid) const override{
         if (kill(pid, SIGCONT) == 0) {
             return true;
         } else {
@@ -75,7 +75,7 @@ public:
     }
 
     // Kill a process
-    bool killProcess(pid_t pid) {
+    bool killProcess(pid_t pid) const override{
         if (kill(pid, SIGKILL) == 0) {
             removeActiveProcess(pid);
             return true;
@@ -86,7 +86,7 @@ public:
     }
 
     // List all active processes
-    void listActiveProcesses() const {
+    void listActiveProcesses() const  override{
         std::cout << "Active Processes:" << std::endl;
         for (pid_t pid : activeProcesses) {
             std::cout << "PID: " << pid << std::endl;
@@ -94,7 +94,7 @@ public:
     }
 
     // List all system processes
-    void listSystemProcesses() const {
+    void listSystemProcesses() const override{
         std::cout << "System Processes:" << std::endl;
         DIR* dir = opendir("/proc");
         if (dir) {
