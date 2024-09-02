@@ -7,6 +7,7 @@
 // ResourceMonitor: Tracks resource usage such as CPU, memory, and I/O
 class ResourceMonitor : public processManager::IResourceMonitor {
 public:
+    // Get resource usage for a specific process
     ResourceUsage getUsage(pid_t pid) override {
         ResourceUsage usage = {0.0, 0, 0, 0};
         struct rusage r_usage{};
@@ -15,6 +16,7 @@ public:
             usage.memoryUsage = r_usage.ru_maxrss;
         }
 
+        // Read I/O usage from /proc/[pid]/io
         std::ifstream ioFile("/proc/" + std::to_string(pid) + "/io");
         std::string line;
         while (std::getline(ioFile, line)) {
@@ -25,5 +27,13 @@ public:
             }
         }
         return usage;
+    }
+
+    // Display resource usage
+    void displayUsage(const ResourceUsage& usage) const override {
+        std::cout << "CPU Time: " << usage.cpuTime << " sec, "
+                  << "Memory Usage: " << usage.memoryUsage << " KB, "
+                  << "I/O Read: " << usage.ioRead << " bytes, "
+                  << "I/O Write: " << usage.ioWrite << " bytes" << std::endl;
     }
 };
