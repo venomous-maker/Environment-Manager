@@ -33,6 +33,7 @@ namespace processManager {
         virtual void waitForProcess(int options) = 0;
         virtual int getProcessStatus() const = 0;
         virtual pid_t getProcessId() const = 0;
+        virtual bool suspendProcess() const = 0;
 
         virtual ~IProcessManager() = default;
     };

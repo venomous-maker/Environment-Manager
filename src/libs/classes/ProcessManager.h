@@ -44,7 +44,7 @@ public:
     }
 
     // Suspend a process
-    bool suspendProcess(pid_t pid) {
+    bool suspendProcess() const override {
         if (kill(pid, SIGSTOP) == 0) {
             return true;
         }
