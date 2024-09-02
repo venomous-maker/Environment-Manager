@@ -53,5 +53,16 @@ public:
         return false;
 
     }
+
+    bool suspendProcess(pid_t __pid__) const override {
+        if (kill(__pid__, SIGSTOP) == 0) {
+            return true;
+        }
+
+        std::cerr << "Failed to suspend process " << pid << std::endl;
+        return false;
+
+    }
+
 };
 #endif
