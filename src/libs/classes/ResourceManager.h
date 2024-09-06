@@ -4,8 +4,10 @@
 
 #include "../headers/ProcessManager.h"
 
+using namespace processManager;
+
 // ResourceMonitor: Tracks resource usage such as CPU, memory, and I/O
-class ResourceMonitor : public processManager::IResourceMonitor {
+class ResourceMonitor : public IResourceMonitor {
 public:
     // Get resource usage for a specific process
     ResourceUsage getUsage(pid_t pid) override {

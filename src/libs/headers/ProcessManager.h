@@ -92,7 +92,6 @@ namespace processManager {
         virtual void runCommand(const std::string& command) = 0;
         virtual ~IEmulator() = default;
     };
-
 } // namespace processManager
 
 #endif // PROCESSMANAGER_H

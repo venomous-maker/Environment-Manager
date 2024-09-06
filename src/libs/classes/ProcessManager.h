@@ -5,8 +5,8 @@
 #ifndef PROCESSMANAGER_HH
 #define PROCESSMANAGERH_H
 #include "../headers/ProcessManager.h"
-
-class ProcessManager : public processManager::IProcessManager {
+using namespace processManager;
+class ProcessManager : public IProcessManager {
 public:
     pid_t createProcess(const std::string& command) override {
         pid = fork();
