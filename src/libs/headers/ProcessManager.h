@@ -45,7 +45,7 @@ namespace processManager {
         }
 
     public:
-        IProcessManager() : pid(0), status(0) {}
+        //IProcessManager() : pid(0), status(0) {}
 
         virtual pid_t createProcess(const std::string& command) = 0;
         virtual void waitForProcess(int options) = 0;
@@ -58,7 +58,7 @@ namespace processManager {
         virtual void listActiveProcesses() const;
         virtual void listSystemProcesses() const;
 
-        virtual ~IProcessManager() = default;
+        //virtual ~IProcessManager() = default;
     };
 
     class IResourceMonitor {
@@ -70,11 +70,11 @@ namespace processManager {
             long ioWrite;        // Bytes written
         };
 
-        IResourceMonitor() = default;
+        //ResourceMonitor() = default;
 
         virtual ResourceUsage getUsage(pid_t pid) = 0;
 
-        virtual ~IResourceMonitor() = default;
+        //virtual ~IResourceMonitor() = default;
 
         virtual void displayUsage(const ResourceUsage& usage) const;
     };
