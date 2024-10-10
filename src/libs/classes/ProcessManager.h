@@ -3,7 +3,7 @@
 // Created by v3n0m on 31/08/24.
 //
 #ifndef PROCESSMANAGER_HH
-#define PROCESSMANAGERH_H
+#define PROCESSMANAGERH_HH
 #include "../headers/ProcessManager.h"
 
 class ProcessManager : public processManager::IProcessManager {
