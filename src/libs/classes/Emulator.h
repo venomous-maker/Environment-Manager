@@ -4,6 +4,8 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
+#include <utility>
+
 #include "../headers/ProcessManager.h"
 #include "./Logger.h"
 #include "./ProcessManager.h"
@@ -16,46 +18,72 @@ public:
     Emulator() : processManager(std::make_shared<ProcessManager>()),
                  resourceMonitor(std::make_shared<ResourceMonitor>()),
                  logger(std::make_shared<Logger>("emulator.log")) {}
+    Emulator(std::shared_ptr<IProcessManager> process_manager, std::shared_ptr<IResourceMonitor> resource_monitor,
+        std::shared_ptr<ILogger> logger)
+    {
+        this->processManager = std::move(process_manager);
+        this->resourceMonitor = std::move(resource_monitor);
+        this->logger = std::move(logger);
+    }
 
-    void runCommand(const std::string& command) override {
+
+    void runCommand(const ARGUMENTS& arguments) override {
+
         auto start = std::chrono::high_resolution_clock::now();
 
-        pid_t pid = processManager->createProcess(command);
+        pid_t pid = processManager->createProcess(arguments.command);
         processManager->waitForProcess(0);
+        if(arguments.display) {
+            this->displayUsage(pid);
+        }
+
+        if(arguments.listActive) {
+            this->listActiveProcesses();
+        }
+
+        if(arguments.listSystem) {
+            this->listSystemProcesses();
+        }
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = end - start;
 
         IResourceMonitor::ResourceUsage usage = resourceMonitor->getUsage(pid);
 
-        logger->log("Command: " + command);
+        logger->log("Command: " + arguments.command);
         logger->log("Exit Status: " + std::to_string(processManager->getProcessStatus()));
         logger->logExecutionTime(elapsed.count());
         logger->logResourceUsage(usage);
         logger->log("----------------------");
-
-        resourceMonitor->displayUsage(usage);
     }
 
     // Other emulator methods to suspend, resume, kill processes
-    bool suspendProcess(pid_t pid) {
+    bool suspendProcess(pid_t pid) override {
         return this->processManager->suspendProcess(pid);
     }
 
-    bool resumeProcess(pid_t pid) const{
-       return processManager->resumeProcess(pid);
+    [[nodiscard]] bool resumeProcess(pid_t pid) const override{
+        return processManager->resumeProcess(pid);
     }
 
-    void killProcess(pid_t pid) const{
+    void killProcess(pid_t pid) const override{
         processManager->killProcess(pid);
     }
 
-    void listSystemProcesses() const{
+    void listSystemProcesses() const override{
         processManager->listSystemProcesses();
     }
 
-    void listActiveProcesses() const{
+    void listActiveProcesses() const override{
         processManager->listActiveProcesses();
+    }
+
+    void displayUsage(pid_t pid) override {
+        resourceMonitor->displayUsage(resourceMonitor->getUsage(pid));
+    }
+
+    void setFileName(std::string filename) override {
+        this->logger = std::make_shared<Logger>(filename);
     }
 
 private:

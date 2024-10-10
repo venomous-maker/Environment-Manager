@@ -5,8 +5,8 @@
 #ifndef PROCESSMANAGER_HH
 #define PROCESSMANAGERH_H
 #include "../headers/ProcessManager.h"
-using namespace processManager;
-class ProcessManager : public IProcessManager {
+
+class ProcessManager : public processManager::IProcessManager {
 public:
     pid_t createProcess(const std::string& command) override {
         pid = fork();
@@ -14,8 +14,7 @@ public:
             // Handle fork failure
             std::cerr << "Fork failed" << std::endl;
             exit(EXIT_FAILURE);
-        }
-        if (pid == 0) {
+        } else if (pid == 0) {
             // Child process
             char* args[] = {const_cast<char*>("/bin/sh"), const_cast<char*>("-c"), const_cast<char*>(command.c_str()), nullptr};
             if (execvp(args[0], args) == -1) {
@@ -25,26 +24,26 @@ public:
             }
         }
         // Parent process
-        return this->pid;
+        return pid;
     }
 
     void waitForProcess(int options) override {
-        if (waitpid(this->pid, &this->status, options) == -1) {
+        if (waitpid(pid, &status, options) == -1) {
             // Handle waitpid failure
             std::cerr << "waitpid failed" << std::endl;
         }
     }
 
-    pid_t getProcessId() const override {
-        return this->pid;
+    [[nodiscard]] pid_t getProcessId() const override {
+        return pid;
     }
 
-    int getProcessStatus() const override {
-        return this->status;
+    [[nodiscard]] int getProcessStatus() const override {
+        return status;
     }
 
     // Suspend a process
-    bool suspendProcess() const override {
+    [[nodiscard]] bool suspendProcess() const override {
         if (kill(this->pid, SIGSTOP) == 0) {
             return true;
         }
@@ -54,7 +53,7 @@ public:
 
     }
 
-    bool suspendProcess(pid_t __pid__) const override {
+    [[nodiscard]] bool suspendProcess(pid_t __pid__) const override {
         if (kill(__pid__, SIGSTOP) == 0) {
             return true;
         }
@@ -65,7 +64,7 @@ public:
     }
 
     // Resume a suspended process
-    bool resumeProcess(pid_t pid) const override{
+    [[nodiscard]] bool resumeProcess(pid_t pid) const override {
         if (kill(pid, SIGCONT) == 0) {
             return true;
         } else {
@@ -85,10 +84,11 @@ public:
         }
     }
 
+
     // List all active processes
-    void listActiveProcesses() const  override{
+    void listActiveProcesses() const override {
         std::cout << "Active Processes:" << std::endl;
-        for (pid_t pid : activeProcesses) {
+        for (pid_t pid : this->activeProcesses) {
             std::cout << "PID: " << pid << std::endl;
         }
     }
@@ -109,7 +109,6 @@ public:
             std::cerr << "Failed to open /proc directory." << std::endl;
         }
     }
-
 
 };
 #endif

@@ -24,6 +24,9 @@ public:
     void logExecutionTime(double time) override {
         logStream << "Execution Time: " << time << " seconds" << std::endl;
     }
+    void setFilename(std::string filename) override {
+        this->filename = filename;
+    }
 
 private:
     std::ofstream logStream;
