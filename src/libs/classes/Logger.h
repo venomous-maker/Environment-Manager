@@ -39,6 +39,13 @@ public:
         this->filename = std::move(filename);
     }
 
+    ~Logger() override {
+        if (logStream.is_open()) {
+            logStream.close();
+        }
+    }
+
+
 private:
     std::ofstream logStream;
 };
