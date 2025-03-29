@@ -91,8 +91,12 @@ public:
         resourceMonitor->displayUsage(resourceMonitor->getUsage(pid));
     }
 
+    // void setFileName(std::string filename) override {
+    //     this->logger = std::make_shared<Logger>(filename);
+    // }
+
     void setFileName(std::string filename) override {
-        this->logger = std::make_shared<Logger>(filename);
+        logger->setFilename(std::move(filename));
     }
 
 private:
