@@ -118,6 +118,7 @@ namespace processManager {
         virtual void listActiveProcesses() const = 0;
         virtual  void displayUsage(pid_t pid) = 0;
         virtual void setFileName(std::string filename) = 0;
+        virtual void logExecutionDetails(const std::string& command, pid_t pid, double elapsed) const = 0;
     };
 
 } // namespace processManager
