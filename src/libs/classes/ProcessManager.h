@@ -18,9 +18,8 @@ public:
             // Child process
             char* args[] = {const_cast<char*>("/bin/sh"), const_cast<char*>("-c"), const_cast<char*>(command.c_str()), nullptr};
             if (execvp(args[0], args) == -1) {
-                // Handle execvp failure
-                std::cerr << "Execution failed" << std::endl;
-                exit(EXIT_FAILURE);  // execvp only returns on failure
+                perror("execvp failed");  // Print the system error message
+                exit(EXIT_FAILURE);
             }
         }
         // Parent process
