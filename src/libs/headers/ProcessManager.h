@@ -13,17 +13,12 @@
 #include <fstream>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
 #include <sys/resource.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <csignal>
-#include <vector>
 #include <algorithm>
-#include <vector>
-#include <string>
-#include <sys/wait.h>
 #include <unistd.h>
 #include <fstream>
 #include <dirent.h>
