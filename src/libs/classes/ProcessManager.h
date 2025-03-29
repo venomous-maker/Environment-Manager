@@ -29,8 +29,8 @@ public:
 
     void waitForProcess(int options) override {
         if (waitpid(pid, &status, options) == -1) {
-            // Handle waitpid failure
-            std::cerr << "waitpid failed" << std::endl;
+            perror("waitpid failed");
+            status = -1; // Indicate failure
         }
     }
 
