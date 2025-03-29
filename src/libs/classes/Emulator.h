@@ -32,6 +32,11 @@ public:
         auto start = std::chrono::high_resolution_clock::now();
 
         pid_t pid = processManager->createProcess(arguments.command);
+        if (pid == -1) {
+            logger->log("Error: Failed to create process for command: " + arguments.command);
+            return;
+        }
+
         processManager->waitForProcess(0);
         if(arguments.display) {
             this->displayUsage(pid);
