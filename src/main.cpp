@@ -72,14 +72,14 @@ ARGUMENTS handleMultipleCommands(int argc, char* argv[]) {
         if (command == "file") {
             if (i + 1 < argc) {  // Check if a file name is provided
                 arguments.filename = argv[++i];
-                handleFileCommand(arguments.filename);
+                //handleFileCommand(arguments.filename);
             } else {
                 std::cerr << "Error: No filename provided for file command." << std::endl;
             }
         } else if (command == "kill") {
             if (i + 1 < argc) {  // Check if a process ID is provided
                 pid_t pid = std::stoi(argv[++i]);
-                killProcess(pid);
+                //killProcess(pid);
                 arguments.kill = true;
                 arguments.killPID = pid;
             } else {
@@ -89,7 +89,7 @@ ARGUMENTS handleMultipleCommands(int argc, char* argv[]) {
             arguments.suspend = true;
             if (i + 1 < argc) {
                 pid_t pid = std::stoi(argv[++i]);
-                suspendProcess(pid);
+                //suspendProcess(pid);
                 arguments.suspendPID = pid;
             } else {
                 std::cerr << "Error: No process ID provided for suspend command." << std::endl;
@@ -97,7 +97,7 @@ ARGUMENTS handleMultipleCommands(int argc, char* argv[]) {
         } else if (command == "resume") {
             if (i + 1 < argc) {
                 pid_t pid = std::stoi(argv[++i]);
-                resumeProcess(pid);
+                //resumeProcess(pid);
                 arguments.resume = true;
                 arguments.resumePID  = pid;
             } else {
@@ -116,7 +116,7 @@ ARGUMENTS handleMultipleCommands(int argc, char* argv[]) {
     return arguments;
 }
 
-int main(int argc, char* argv[]) {
+int main_(int argc, char* argv[]) {
     // Create an instance of the Emulator
     processManager::IEmulator* emulator = new Emulator();
 
