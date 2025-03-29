@@ -8,7 +8,12 @@ using namespace  processManager;
 // Logger: Captures and logs output, resource usage, and execution time
 class Logger : public ILogger {
 public:
-    explicit Logger(const std::string& logFile) : logStream(logFile, std::ios::out | std::ios::app) {}
+    explicit Logger(const std::string& logFile) : logStream(logFile, std::ios::out | std::ios::app) {
+        if (!logStream) {
+            std::cerr << "Error: Could not open log file: " << logFile << std::endl;
+        }
+    }
+
 
     void log(const std::string& message) override {
         logStream << message << std::endl;
