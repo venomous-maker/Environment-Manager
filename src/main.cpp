@@ -143,3 +143,50 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
+int main(int argc, char* argv[]) {
+    // Create instances
+    processManager::IEmulator* emulator = new Emulator();
+    ProcessManager processManager;
+
+    // Parse arguments
+    std::string command = concatenateArguments(argc, argv);
+    const auto arguments_ = handleMultipleCommands(argc, argv);
+
+    // Execute requested command
+    if (arguments_.kill) {
+        emulator->killProcess(arguments_.killPID);
+    }
+    if (arguments_.suspend) {
+        emulator->suspendProcess(arguments_.suspendPID);
+    }
+    if (arguments_.resume) {
+        emulator->resumeProcess(arguments_.resumePID);
+    }
+    if (arguments_.listSystem) {
+        emulator->listSystemProcesses();
+    }
+    if (arguments_.listActive) {
+        emulator->listActiveProcesses();
+    }
+
+    // If no special process command, run normally
+    if (!arguments_.command.empty()) {
+        emulator->runCommand(arguments_);
+    }
+
+    // Monitor child processes
+    int status;
+    pid_t child_pid;
+    while ((child_pid = wait(&status)) > 0) {
+        if (WIFEXITED(status)) {
+            std::cout << "Process " << child_pid << " exited with status " << WEXITSTATUS(status) << std::endl;
+        } else if (WIFSIGNALED(status)) {
+            std::cout << "Process " << child_pid << " killed by signal " << WTERMSIG(status) << std::endl;
+        }
+    }
+
+    // Cleanup
+    delete emulator;
+    return 0;
+}
