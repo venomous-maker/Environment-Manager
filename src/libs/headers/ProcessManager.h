@@ -109,7 +109,7 @@ namespace processManager {
         virtual void runCommand(const ARGUMENTS& arguments) = 0;
         virtual ~IEmulator() = default;
         virtual bool suspendProcess(pid_t pid) = 0;
-        [[nodiscard]] virtual bool resumeProcess(pid_t pid) const = 0;
+        virtual bool resumeProcess(pid_t pid) = 0;
 
         virtual void killProcess(pid_t pid) const = 0;
 
