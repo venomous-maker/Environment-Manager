@@ -106,7 +106,8 @@ public:
             }
             closedir(dir);
         } else {
-            std::cerr << "Failed to open /proc directory." << std::endl;
+            perror("Failed to open /proc");
+
         }
     }
 
