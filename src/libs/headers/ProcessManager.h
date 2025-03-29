@@ -18,7 +18,7 @@
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
-#include <signal.h>
+#include <csignal>
 #include <vector>
 #include <algorithm>
 #include <vector>
