@@ -53,14 +53,18 @@ public:
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = end - start;
 
-        IResourceMonitor::ResourceUsage usage = resourceMonitor->getUsage(pid);
+        logExecutionDetails(arguments.command, pid, elapsed.count());
+    }
 
-        logger->log("Command: " + arguments.command);
+    void logExecutionDetails(const std::string& command, pid_t pid, double elapsed) const {
+        IResourceMonitor::ResourceUsage usage = resourceMonitor->getUsage(pid);
+        logger->log("Command: " + command);
         logger->log("Exit Status: " + std::to_string(processManager->getProcessStatus()));
-        logger->logExecutionTime(elapsed.count());
+        logger->logExecutionTime(elapsed);
         logger->logResourceUsage(usage);
         logger->log("----------------------");
     }
+
 
     // Other emulator methods to suspend, resume, kill processes
     bool suspendProcess(pid_t pid) override {
