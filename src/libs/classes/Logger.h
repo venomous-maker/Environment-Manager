@@ -17,6 +17,7 @@ public:
 
     void log(const std::string& message) override {
         logStream << message << std::endl;
+        logStream.flush();
     }
 
     void logResourceUsage(const IResourceMonitor::ResourceUsage& usage) override {
