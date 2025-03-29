@@ -31,7 +31,12 @@ public:
         logStream << "Execution Time: " << time << " seconds" << std::endl;
     }
     void setFilename(std::string filename) override {
-        this->filename = filename;
+        logStream.close();
+        logStream.open(filename, std::ios::out | std::ios::app);
+        if (!logStream) {
+            std::cerr << "Error: Could not open new log file: " << filename << std::endl;
+        }
+        this->filename = std::move(filename);
     }
 
 private:
