@@ -71,7 +71,7 @@ public:
         return this->processManager->suspendProcess(pid);
     }
 
-    [[nodiscard]] bool resumeProcess(pid_t pid) const override{
+    bool resumeProcess(pid_t pid) override{
         return processManager->resumeProcess(pid);
     }
 
