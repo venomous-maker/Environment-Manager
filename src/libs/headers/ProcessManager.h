@@ -27,17 +27,23 @@ namespace processManager {
     struct ARGUMENTS {
         bool hasFile = false;
         bool display = false;
+        std::string filename;
+
         bool kill = false;
         int killPID = 0;
+
         bool suspend = false;
         int suspendPID = 0;
+
         bool resume = false;
         int resumePID = 0;
+
         bool listSystem = false;
         bool listActive = false;
-        std::string filename;
+
         std::string command;
     };
+
 
     class IProcessManager {
     protected:
