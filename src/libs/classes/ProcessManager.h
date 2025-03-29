@@ -87,8 +87,9 @@ public:
     // List all active processes
     void listActiveProcesses() const override {
         std::cout << "Active Processes:" << std::endl;
-        for (pid_t pid : this->activeProcesses) {
-            std::cout << "PID: " << pid << std::endl;
+        if (activeProcesses.empty()) {
+            std::cout << "No active processes." << std::endl;
+            return;
         }
     }
 
