@@ -56,7 +56,7 @@ public:
         logExecutionDetails(arguments.command, pid, elapsed.count());
     }
 
-    void logExecutionDetails(const std::string& command, pid_t pid, double elapsed) const {
+    void logExecutionDetails(const std::string& command, pid_t pid, double elapsed) const override {
         IResourceMonitor::ResourceUsage usage = resourceMonitor->getUsage(pid);
         logger->log("Command: " + command);
         logger->log("Exit Status: " + std::to_string(processManager->getProcessStatus()));
